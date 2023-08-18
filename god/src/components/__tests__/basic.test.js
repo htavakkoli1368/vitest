@@ -1,26 +1,39 @@
 
-import { expect,test,describe } from 'vitest'
-import {  add } from '../../funcsTest/math'
-import {  getresult } from '../../funcsTest/result'
+import { expect,it,beforeAll,afterAll,beforeEach,afterEach } from 'vitest'
+import {  createjsonwebtoken } from '../../funcsTest/asyncFunc'
+import {  generateTokenPromise } from '../../funcsTest/asyncFunc'
+import {User} from '../../funcsTest/hooksuser'
 
-
- describe('math function', () => {
-  // test('should work as expected', () => { 
-  //   expect(Math.sqrt(4)).toBe(2)
-  // })
-  // test("add nan number",()=>{
-  // var arr =[];
-  // const result =add(arr)
-  //   expect(result).toBe(0)
-  // })
-  test('get result ', () => {
-    let result = getresult(25);
-    let result2 = getresult("invalid");
-    let result3 = getresult(false);
-    expect(result).toBeTypeOf("string");
-    expect(result2).toBeTypeOf("string");
-    expect(result3).toBeTypeOf("string");
-  });
- })
-
-  
+const email = "hosseinjealous@gmail.com";
+let user = new User(email);
+ 
+it('async test', async () => {
+  const email = "hosseinjealous@gmail.com";
+  const token = await generateTokenPromise(email);
+  expect(token).toBeDefined()
+}) 
+afterEach(()=>{   
+  user = new User(email);
+});
+beforeEach(()=>{   
+  console.log("beforeEach");
+});
+afterAll(()=>{   
+  console.log("afterAll");
+});
+beforeAll(()=>{   
+   console.log("beforeAll");
+});
+ 
+it('hooks user', async () => {
+  const newEmail = "hossein@gmail.com";  
+  user.updateEmail(newEmail);
+  expect(user.email).toBe("hossein@gmail.com");
+}) 
+it('hooks user', async () => {
+  expect(user.email).toBe(email);
+}) 
+it('hooks user property', async () => {
+  expect(user).toHaveProperty("email");
+}) 
+ 

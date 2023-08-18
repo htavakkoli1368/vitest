@@ -1,3 +1,4 @@
+ 
 export function getresult(calcnumber){
     let result ="";
     if(calcnumber == "invalid"){
